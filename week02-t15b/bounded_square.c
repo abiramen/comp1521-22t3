@@ -11,21 +11,13 @@ int main(void) {
 
 
 
-    if (x > 46340) goto x_gt_46340;
-    
 
+    if (x > 46340) {
+        printf("square too big for 32 bits\n");
+    } else {
+        y = x * x;
+        printf("%d\n", y);
+    }
 
-
-    y = x * x;
-    printf("%d\n", y);
-
-    goto epilogue;
-
-
-x_gt_46340:
-    printf("square too big for 32 bits\n");
-
-
-epilogue:
     return 0;
 }
