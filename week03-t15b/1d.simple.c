@@ -1,18 +1,28 @@
 #include <stdio.h>
 #define N_ELEMENTS 5
 
-int main(void) {
-    char array[N_ELEMENTS] = {'h', 'e', 'l', 'l', 'o'};
+int array[N_ELEMENTS] = {3, 1, 4, 1, 5};
 
-    for (int i = 0; i < N_ELEMENTS; i++) {
-        putchar(array[i]);
-        putchar('\n');
-    }
+int main(void) {
+
+
+loop_i_to_N_ELEMENTS_init:
+    int i = 0;
+loop_i_to_N_ELEMENTS_cond:
+    if (i >= N_ELEMENTS) goto loop_i_to_N_ELEMENTS_end;
+loop_i_to_N_ELEMENTS_body:
+    printf("%d", array[i]); // array + i * 4
+    putchar('\n');
+    i++;
+    goto loop_i_to_N_ELEMENTS_cond;
+
+loop_i_to_N_ELEMENTS_end:
+
+
+
 
     return 0;
 }
 
 
-// What if we had
-// int array[N_ELEMENTS] = {3, 1, 4, 1, 5};
 
