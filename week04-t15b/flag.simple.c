@@ -13,9 +13,37 @@ char flag[N_ROWS][N_COLS] = {
 };
 
 int main(void) {
-    for (int row = 0; row < 6; row++) {
-        for (int col = 0; col < 12; col++)
-            printf("%c", flag[row][col]);
-        printf("\n");
-    }
+
+main__for_row_init:
+    int row = 0;
+
+main__for_row_cond:
+    if (row >= N_ROWS) goto main__for_row_end;
+
+main__for_row_body:
+
+main__for_col_init:
+    int col = 0;
+
+main__for_col_cond:
+    if (col >= N_COLS) goto main__for_col_end;
+
+main__for_col_body:
+    printf("%c", flag[row][col]);               // &flag[row][col] = &flag[0][0] + (i * N_COLS + j) * sizeof(char)
+
+main__for_col_step:
+    col++;
+    goto main__for_col_cond;
+
+
+main__for_col_end:
+    printf("\n");
+
+main__for_row_step:
+    row++;
+    goto main__for_row_cond;
+
+main__for_row_end:
+
+    return 0;
 }

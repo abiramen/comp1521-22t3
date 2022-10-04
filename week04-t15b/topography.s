@@ -12,7 +12,7 @@ N_POINTS = 4
 .text
 
 main:
-	# Registers:
+	# Locals:
 	#   - $t0: int i, the loop counter
 	#   - $t1: row of the current point
 	#   - $t2: col of the current point
@@ -28,8 +28,20 @@ points_loop_cond:
 	bge	$t0, N_POINTS, points_loop_end	# if (i >= N_POINTS)
 
 					# TODO: Complete these three!
-					# int row = my_points[i].row;
-					# int col = my_points[i].col;
+	mul	$t4, $t0, 8		# (i * 8)
+	la	$t5, my_points		#
+	add	$t4, $t4, $t5		# + my_points
+	
+	lw	$t1, 0($t4)		# int row = my_points[i].row;
+	lw	$t2, 4($t4)		# int col = my_points[i].col;
+	
+	mul	$t5, $t1, MAP_SIZE	# (row * MAP_SIZE
+	add	$t5, $t5, $t2		# + col)
+	mul	$t5, $t5, 4		# * sizeof(int)
+
+	lw	$t3, topography_grid($t5)
+	
+	
 					# int height = topography_grid[row][col];
 
 					# printf("Height at %d,%d=%d\n", row, col, height);
