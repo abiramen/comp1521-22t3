@@ -31,7 +31,7 @@ fib__prologue:
 fib__body:
 	move	$s0, $a0
 
-	blt	$s0, 2, fib__n_lt_2
+	blt	$s0, 2, fib__n_lt_2			# if (n < 2) goto fib__n_lt_2;
 
 	addi	$a0, $s0, -1				#
 	jal	fib					#
@@ -41,8 +41,8 @@ fib__body:
 	addi	$a0, $s0, -2				#
 	jal	fib					# fib(n - 2)
 
-	add	$v0, $v0, $s1				# return fib(n - 1) + fib(n - 2)
-	j	fib__epilogue
+	add	$v0, $v0, $s1				# 
+	j	fib__epilogue				# return fib(n - 1) + fib(n - 2)
 
 
 fib__n_lt_2:
@@ -84,7 +84,6 @@ main__prologue:
 	begin
 	push	$ra
 
-
 main__body:
 
 	li	$v0, 4				# syscall 4: print_string
@@ -95,38 +94,29 @@ main__body:
 	syscall					#
 	move	$t0, $v0			# scanf("%d", &n);
 
-	li	$v0, 4				# 
+	li	$v0, 4				# syscall 4: print_string
 	la	$a0, result_msg_1		#
-	syscall					#
+	syscall					# printf("Fibonacci of ");
 
-	li	$v0, 1
-	move	$a0, $t0
-	syscall
+	li	$v0, 1				# syscall 1: print_int
+	move	$a0, $t0			#
+	syscall					# printf("%d", n);
 
-	li	$v0, 4				# 
+	li	$v0, 4				# syscall 4: print_string
 	la	$a0, result_msg_2		#
-	syscall					#
-
+	syscall					# printf(" is ");
 
 	move	$a0, $t0
-	
-	
 	jal	fib				# fib(n)
-
-
-
-
-	# $t1 was meant to contain a copy of the original $ra
-	# we MUST assume that any $t register is fair game for another funciton
 
 
 	move	$a0, $v0			#
 	li	$v0, 1				# syscall 1: print_int
-	syscall
+	syscall					# printf("%d", fib(n));
 
 	li	$v0, 11				# syscall 11: print_char
 	li	$a0, '\n'			#
-	syscall
+	syscall					# putchar('\n');
 
 
 main__epilogue:
