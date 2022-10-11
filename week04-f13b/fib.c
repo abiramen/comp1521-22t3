@@ -3,17 +3,34 @@
 #include <stdio.h>
 
 int fib(int n) {
-    if (n < 2) {
-    	return n;
-    }
-    return fib(n - 1) + fib(n - 2);
+    int retval;
+
+    if (n < 2) goto fib__n_lt_2;
+
+    retval = fib(n - 1) + fib(n - 2);
+    goto fib__epilogue;
+
+fib__n_lt_2:
+    retval = n;
+
+fib__epilogue:
+    return retval;
 }
 
 int main(void) {
     printf("Enter a number: ");
-    int n;
+    int n;  // can use $t register
     scanf("%d", &n);
 
-    printf("Fibonacci of %d is %d\n", n, fib(n));
+    printf("Fibonacci of ");
+    printf("%d", n);
+    printf(" is ");
+    printf("%d", fib(n));
+
+
+    putchar('\n');
+
+
+
     return 0;
 }

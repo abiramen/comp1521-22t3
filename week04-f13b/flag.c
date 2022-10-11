@@ -15,7 +15,7 @@ char flag[N_ROWS][N_COLS] = {
 int main(void) {
     for (int row = 0; row < 6; row++) {
         for (int col = 0; col < 12; col++)
-            printf("%c", flag[row][col]);
+            printf("%c", flag[row][col]);   // flag + (row * N_COLS + col) * sizeof(char)
         printf("\n");
     }
 }

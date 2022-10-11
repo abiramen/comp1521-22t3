@@ -11,9 +11,11 @@
 
 // 2D representation of a point, stored as a single struct
 struct point2D {
-    int row;
-    int col;
+    int row;        // bytes 0 - 3
+    int col;        // bytes 4 - 7
 } typedef point2D_t;
+
+int num;
 
 // 2D grid representing the height data for an area.
 int topography_grid[MAP_SIZE][MAP_SIZE] = {
@@ -34,11 +36,30 @@ point2D_t my_points[N_POINTS] = {
 
 int main() {
     // Loop over all elements, and print their data
-    for (int i = 0; i < N_POINTS; i++) {
-        int row = my_points[i].row;
-        int col = my_points[i].col;
-        int height = topography_grid[row][col];
-        printf("Height at %d,%d=%d\n", row, col, height);
-    }
+
+main__for_row_init:
+    int i = 0;
+main__for_row_cond:
+    if (i >= N_POINTS) goto main__for_row_end;
+
+main__for_row_body:
+
+    // &my_points[i] = my_points + i * 8
+    // &my_points[i].row = my_points + i * 8 + 0
+    // &my_points[i].col = my_points + i * 8 + 4
+
+
+    int row = my_points[i].row;
+    int col = my_points[i].col;
+    int height = topography_grid[row][col];
+    printf("Height at (%d,%d) = %d\n", row, col, height);
+main__for_row_step:
+    i++;
+    goto main__for_row_cond;
+
+main__for_row_end:
     return 0;
+
+
+
 }

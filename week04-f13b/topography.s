@@ -26,11 +26,25 @@ points_loop_init:			# for (int i = 0; i < N_POINTS; i++) {
 
 points_loop_cond:
 	bge	$t0, N_POINTS, points_loop_end	# if (i >= N_POINTS)
+	#	// &my_points[i] = my_points + i * 8
+	#     // &my_points[i].row = my_points + i * 8 + 0
+	#     // &my_points[i].col = my_points + i * 8 + 4
+	# 
 
-					# TODO: Complete these three!
-					# int row = my_points[i].row;
-					# int col = my_points[i].col;
-					# int height = topography_grid[row][col];
+	mul	$t4, $t0, 8		# (i * 8)
+	la	$t5, my_points		#
+	add	$t4, $t4, $t5		# + my_points
+
+
+	lw	$t1, 0($t4)		# int row = my_points[i].row;
+	lw	$t2, 4($t4)		# int col = my_points[i].col;
+	
+
+	mul	$t4, $t1, MAP_SIZE	# (row * MAP_SIZE
+	add	$t4, $t4, $t2		# + col)
+	mul	$t4, $t4, 4		# * sizeof(int)
+
+	lw	$t3, topography_grid($t4)# int height = topography_grid[row][col];
 
 					# printf("Height at %d,%d=%d\n", row, col, height);
 

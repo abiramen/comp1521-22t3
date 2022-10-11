@@ -1,19 +1,43 @@
-// A simple, recursive, non-memoized fibonacci implementation.
-// Abiram Nadarajah, October 2021
 #include <stdio.h>
+#define N_ROWS 6
+#define N_COLS 12
 
-int fib(int n) {
-    if (n < 2) {
-    	return n;
-    }
-    return fib(n - 1) + fib(n - 2);
-}
+
+char flag[N_ROWS][N_COLS] = {
+    {'#', '#', '#', '#', '#', '.', '.', '#', '#', '#', '#', '#'},
+    {'#', '#', '#', '#', '#', '.', '.', '#', '#', '#', '#', '#'},
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'},
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'},
+    {'#', '#', '#', '#', '#', '.', '.', '#', '#', '#', '#', '#'},
+    {'#', '#', '#', '#', '#', '.', '.', '#', '#', '#', '#', '#'}
+};
 
 int main(void) {
-    printf("Enter a number: ");
-    int n;
-    scanf("%d", &n);
 
-    printf("Fibonacci of %d is %d\n", n, fib(n));
+main__for_row_init:
+    int row = 0;
+main__for_row_cond:
+    if (row >= N_ROWS) goto main__for_row_end;
+main__for_row_body:
+
+main__for_col_init:
+    int col = 0;
+main__for_col_cond:
+    if (col >= N_COLS) goto main__for_col_end;
+main__for_col_body:
+    printf("%c", flag[row][col]); 
+main__for_col_step:
+    col++;
+    goto main__for_col_cond;
+
+main__for_col_end:
+    putchar('\n');
+
+
+main__for_row_step:
+    row++;
+    goto main__for_row_cond;
+main__for_row_end:
     return 0;
+
 }
