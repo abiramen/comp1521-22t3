@@ -1,0 +1,47 @@
+input  = 1101 0000
+
+
+
+output = 0000 1011
+
+-- need to loop --
+
+result = 0000 0000
+
+i = 0
+
+input  = 1101 0000 AND
+r_mask = 1000 0000 (1 << 7)
+
+
+-> ANDing produces a non-zero value, which means the relevant bit is set
+
+result = 0000 0000 OR
+w_mask = 0000 0001 (1 << 0)
+
+result = 0000 0001
+
+
+i = 1
+input  = 1101 0000 AND
+r_mask = 0100 0000 (1 << 6)
+
+-> ANDing produces a non-zero result
+
+result = 0000 0001 OR
+w_mask = 0000 0010 (1 << 1)
+
+result = 0000 0011
+
+i = 2
+
+input  = 1101 0000 AND
+r_mask = 0010 0000 (1 << 5)
+
+-> ANDing produces a zero -- thus the relevant bit is NOT set
+
+result = 0000 0011
+
+for any i,
+    w_mask = 1 << i;
+    r_mask = 1 << (N_BITS - 1 - i);
