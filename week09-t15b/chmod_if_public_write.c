@@ -1,7 +1,3 @@
-
- 46  
-week09/chmod_if_public_write.c
-@@ -0,0 +1,46 @@
 // Write a C program, chmod_if_public_write.c, which is given 1+ command-line
 // arguments which are the pathnames of files or directories.
 
@@ -46,5 +42,19 @@ int main(int argc, char *argv[]) {
 }
 
 void chmod_if_needed(char *pathname) {
-    // TODO: Implement this function.
+    struct stat s;
+    if (stat(pathname, &s) != 0) {
+        perror(pathname);
+        exit(1);
+    }
+
+    if (s.st_mode & S_IWOTH) {
+        printf("removing public write from %s\n", pathname);
+        if (chmod(pathname, s.st_mode & ~S_IWOTH) != 0) {
+            perror(pathname);
+            exit(1);
+        }
+    } else {
+        printf("%s is not publically writeable\n", pathname);
+    }
 }

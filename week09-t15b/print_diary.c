@@ -10,12 +10,23 @@
 #include <stdio.h>
 #include <string.h>
 
-#define DIARY_PATH "/diary"
+#define DIARY_PATH "/.diary"
 
 
 int main(void) {
 
     // TODO: construct full_path in order to open the file 
+
+    char *home_dir = getenv("HOME");
+    int path_len = strlen(home_dir) + strlen(DIARY_PATH) + 1;
+    char *full_path = malloc(path_len * sizeof(char));
+
+    printf("%s%s\n", home_dir, DIARY_PATH);
+
+    snprintf(full_path, path_len, "%s%s", home_dir, DIARY_PATH);
+   
+
+
     FILE *stream = fopen(full_path, "r");
     if (stream == NULL) {
         perror(full_path);
