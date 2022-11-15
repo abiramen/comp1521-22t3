@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <pthread.h>
+#include <stdatomic.h>
 
-int global_total = 0;
-pthread_mutex_t global_total_lock = PTHREAD_MUTEX_INITIALIZER;
+atomic_int global_total = 0;
 
 
 
@@ -11,11 +11,9 @@ void *add_5000_to_counter(void *data) {
         // sleep for 1 nanosecond
         nanosleep (&(struct timespec){.tv_nsec = 1}, NULL);
         
-        // increment the global total by 1
+        // increment the global total by 2
 
-        pthread_mutex_lock(&global_total_lock);
         global_total++;
-        pthread_mutex_unlock(&global_total_lock);
     }
 
     return NULL;
